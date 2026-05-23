@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   name: backend-deploy
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: backend
@@ -14,7 +13,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: task-manager-backend:v3
+        image: task-manager-backend:v1
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000

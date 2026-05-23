@@ -12,6 +12,10 @@ spec:
       labels:
         app: postgres
     spec:
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: postgres-pvc
       containers:
       - name: postgres
         image: postgres:18-alpine
@@ -36,3 +40,6 @@ spec:
           limits:
             memory: "256Mi"
             cpu: "200m"
+        volumeMounts:
+          - name: postgres-storage
+            mountPath: /var/lib/postgresql
