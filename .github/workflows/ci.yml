@@ -36,14 +36,14 @@ jobs:
         run: |
           kubectl apply -f k8s/postgres/
           kubectl apply -f k8s/backend/
-          kubectl set image deployment/backend \
+          kubectl set image deployment/backend-deploy \
             backend=ghcr.io/${{ github.repository }}/backend:${{ github.sha }}
       - name: Poczekaj na gotowość Podów
         run: |
-          kubectl rollout status deployment/postgres --timeout=120s
-          kubectl rollout status deployment/backend --timeout=120s
+          kubectl rollout status deployment/postgres-deploy --timeout=120s
+          kubectl rollout status deployment/backend-deploy --timeout=120s
       - name: Test HTTP
         run: |
-          kubectl port-forward service/backend-service 8080:8080 &
+          kubectl port-forward service/backend-svc 8080:8080 &
           sleep 5
           curl --fail http://localhost:8080/health
